@@ -14,6 +14,8 @@ type WooCommerceConfig struct {
 
 type Config struct {
 	WooCommerce WooCommerceConfig
+	DSN         string `envconfig:"DSN"`
+	Address     string `envconfig:"ADDRESS"`
 }
 
 func LoadConfig() (*Config, error) {

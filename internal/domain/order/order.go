@@ -1,33 +1,64 @@
 package order
 
 import (
-	"crypto/rand"
 	"encoding/hex"
+	"errors"
 	"fmt"
+	"math/rand"
+	"orderTracker/internal/domain/site"
+	"orderTracker/internal/domain/status"
 	"time"
 )
+
+var r = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 type Order struct {
 	OrderID         int       `json:"id"`
 	FirstName       string    `json:"first_name"`
 	SecondName      string    `json:"last_name"`
 	DeliveryAddress string    `json:"shipping"`
+	Total           string    `json:"total"`
 	CurrentStatus   string    `json:"status"`
 	Created         time.Time `json:"date_created"`
 	TrackNumber     string    `json:"track_number"`
+
+	// Сайт (domain, key, secret, note(sender))
+	SiteID int        `json:"site_id"`
+	Site   *site.Site `json:"site"`
+	// Статусы
+	StatusChain []string
+	StatusIndex int
 }
 
-func (o *Order) GenerateTrackNumber() (string, error) {
+func (o *Order) NextStatus() (string, error) {
+	if o.StatusChain == nil {
+		o.SetStatusChain()
+	}
 
+	if o.StatusIndex >= len(o.StatusChain)-1 {
+		return "", errors.New("status chain finished")
+	}
+	o.StatusIndex++
+	o.CurrentStatus = o.StatusChain[o.StatusIndex]
+	return o.CurrentStatus, nil
+}
+
+func (o *Order) SetStatusChain() {
+	o.StatusChain = status.Chains[r.Intn(len(status.Chains))]
+	o.StatusIndex = 0
+	o.CurrentStatus = o.StatusChain[o.StatusIndex]
+}
+
+func (o *Order) SetStatus(status string) {
+	o.CurrentStatus = status
+}
+
+func (o *Order) GenerateTrackNumber() {
 	year := time.Now().Format("06")
-
 	randomPart, _ := generateRandomString(8)
-
 	uniquePart := fmt.Sprintf("%06d", o.OrderID%1000000)
-
 	result := year + randomPart + uniquePart
-
-	return result, nil
+	o.TrackNumber = result
 }
 
 func generateRandomString(length int) (string, error) {

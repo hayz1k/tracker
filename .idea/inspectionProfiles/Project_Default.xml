@@ -4,6 +4,7 @@
     <inspection_tool class="GoDfaErrorMayBeNotNil" enabled="true" level="WARNING" enabled_by_default="true">
       <functions>
         <function importPath="orderTracker/configs" name="LoadConfig" />
+        <function importPath="orderTracker/internal/store/postgres" name="NewPostgresStore" />
       </functions>
       <methods>
         <method importPath="net/http" receiver="*Client" name="Get" />

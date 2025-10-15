@@ -5,12 +5,14 @@ import (
 	"github.com/rs/zerolog"
 	_ "net/http"
 	"orderTracker/configs"
-	"orderTracker/internal/repositories"
+	start "orderTracker/internal"
+	"orderTracker/internal/store/postgres"
 	"os"
 )
 
 func main() {
 	ctx := context.Background()
+	_ = ctx
 	log := zerolog.New(os.Stdout).With().Timestamp().Logger()
 
 	cfg, err := configs.LoadConfig()
@@ -22,6 +24,18 @@ func main() {
 		log.Fatal().Msg("cfg is empty")
 	}
 
-	store.ApiRequest(ctx, cfg)
+	store, err := postgres.NewPostgresStore(cfg)
+	if err != nil {
+		log.Info().Msgf("%s", err)
+		log.Fatal().Msg("error connecting database")
+	}
+	defer store.Close()
 
+	app := start.NewApp(cfg, store)
+
+	server := start.NewServer(app)
+
+	if err = server.Run(cfg.Address); err != nil {
+		log.Fatal()
+	}
 }

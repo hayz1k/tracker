@@ -1,6 +1,8 @@
 package order
 
-import "context"
+import (
+	"context"
+)
 
 type Store interface {
 	GetByTrackNumber(ctx context.Context, trackNumber string) (*Order, error)
