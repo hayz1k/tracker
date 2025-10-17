@@ -15,17 +15,17 @@ const (
 
 var Chains = [][]string{
 	// цепочка 1: стандартная доставка
-	{StatusCreated, StatusSortingCenter, StatusIntermediateCenter, StatusInTransit, StatusArrivedDestination, StatusOutForDelivery, StatusDelivered, StatusDelivered, StatusDelivered, StatusDelivered},
+	{StatusCreated, StatusSortingCenter, StatusIntermediateCenter, StatusInTransit, StatusArrivedDestination, StatusOutForDelivery, StatusDelivered},
 
 	// цепочка 2: доставка с ожиданием на сортировке
-	{StatusCreated, StatusSortingCenter, StatusSortingCenter, StatusInTransit, StatusArrivedDestination, StatusOutForDelivery, StatusDelivered, StatusDelivered, StatusDelivered, StatusDelivered},
+	{StatusCreated, StatusSortingCenter, StatusSortingCenter, StatusInTransit, StatusArrivedDestination, StatusOutForDelivery, StatusDelivered},
 
 	// цепочка 3: международная доставка
-	{StatusCreated, StatusSortingCenter, StatusInTransit, StatusIntermediateCenter, StatusCustomsHold, StatusInTransit, StatusArrivedDestination, StatusOutForDelivery, StatusDelivered, StatusDelivered},
+	{StatusCreated, StatusSortingCenter, StatusInTransit, StatusIntermediateCenter, StatusCustomsHold, StatusInTransit, StatusArrivedDestination, StatusOutForDelivery, StatusDelivered},
 
 	// цепочка 4: самовывоз
-	{StatusCreated, StatusSortingCenter, StatusInTransit, StatusArrivedDestination, StatusAwaitingPickup, StatusDelivered, StatusDelivered, StatusDelivered, StatusDelivered, StatusDelivered},
+	{StatusCreated, StatusSortingCenter, StatusInTransit, StatusArrivedDestination, StatusAwaitingPickup, StatusDelivered},
 
 	// цепочка 5: возврат
-	{StatusCreated, StatusSortingCenter, StatusInTransit, StatusArrivedDestination, StatusOutForDelivery, StatusReturnedToSender, StatusReturnedToSender, StatusReturnedToSender, StatusReturnedToSender, StatusReturnedToSender},
+	{StatusCreated, StatusSortingCenter, StatusInTransit, StatusArrivedDestination, StatusOutForDelivery, StatusReturnedToSender},
 }

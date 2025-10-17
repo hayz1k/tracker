@@ -183,3 +183,24 @@ func (o *OrderStore) Exists(ctx context.Context, orderID int) (bool, error) {
 
 	return true, nil
 }
+
+func (o *OrderStore) Delete(ctx context.Context, id int) (bool, error) {
+	query := "DELETE FROM orders WHERE order_id = $1"
+	res, err := o.db.ExecContext(ctx, query, id)
+	if err != nil {
+		log.Error().Err(err).Msgf("failed to delete order %d", id)
+		return false, fmt.Errorf("internal error: %w", err)
+	}
+
+	rowsAffected, err := res.RowsAffected()
+	if err != nil {
+		log.Error().Err(err).Msgf("failed to get rows affected for order %d", id)
+		return false, fmt.Errorf("internal error: %w", err)
+	}
+
+	if rowsAffected == 0 {
+		return false, nil
+	}
+
+	return true, nil
+}

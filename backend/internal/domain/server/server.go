@@ -76,7 +76,7 @@ func NewServer(app *App) *Server {
 	r.Get("/api/orders/{id}", app.Handlers.Order.GetOrderByID)
 	r.Get("/api/orders", app.Handlers.Order.GetOrders)
 	r.Post("/api/orders", app.Handlers.Order.PostOrder)
-	// r.Delete("/api/orders/{id}", app.Handlers.Order.DeleteOrder)
+	r.Delete("/api/orders/{id}", app.Handlers.Order.DeleteOrder)
 	// r.Post("/orders{id}", app.Handlers.Order.CreateOrder)
 
 	// Sites

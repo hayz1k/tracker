@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"github.com/rs/zerolog"
 	_ "net/http"
 	"orderTracker/configs"
@@ -33,8 +32,8 @@ func main() {
 	app := server.NewApp(cfg, store)
 
 	srv := server.NewServer(app)
-
-	fmt.Print(cfg.Address)
+	
+	log.Info().Msgf("server is running on port :%s", cfg.Address)
 	if err = srv.Run(cfg.Address); err != nil {
 		log.Fatal()
 	}

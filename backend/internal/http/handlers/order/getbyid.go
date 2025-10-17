@@ -3,6 +3,7 @@ package order
 import (
 	"encoding/json"
 	"github.com/go-chi/chi/v5"
+	"github.com/rs/zerolog/log"
 	"net/http"
 	"strconv"
 )
@@ -22,5 +23,9 @@ func (h *Handler) GetOrderByID(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(order)
+	if err := json.NewEncoder(w).Encode(order); err != nil {
+		log.Error().Err(err).Msgf("failed to encode response for order %d", order.OrderID)
+		http.Error(w, "failed to encode response", http.StatusInternalServerError)
+		return
+	}
 }

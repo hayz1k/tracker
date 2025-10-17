@@ -6,16 +6,9 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-type WooCommerceConfig struct {
-	Url    string `envconfig:"BASE_URL"`
-	Key    string `envconfig:"CONSUMER_KEY"`
-	Secret string `envconfig:"CONSUMER_SECRET"`
-}
-
 type Config struct {
-	WooCommerce WooCommerceConfig
-	DSN         string `envconfig:"DSN"`
-	Address     string `envconfig:"ADDRESS"`
+	DSN     string `envconfig:"DSN"`
+	Address string `envconfig:"ADDRESS"`
 }
 
 func LoadConfig() (*Config, error) {

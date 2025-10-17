@@ -12,6 +12,7 @@ type OrderService interface {
 	ListOrders(ctx context.Context, page, limit int, f *order.OrderFilter) ([]*order.Order, error)
 	Count(ctx context.Context) (int, error)
 	Exists(ctx context.Context, orderID int) (bool, error)
+	Delete(ctx context.Context, id int) (bool, error)
 }
 
 type orderService struct {
@@ -47,4 +48,8 @@ func (os *orderService) ListOrders(ctx context.Context, page, limit int, f *orde
 
 func (os *orderService) Count(ctx context.Context) (int, error) {
 	return os.store.Count(ctx)
+}
+
+func (os *orderService) Delete(ctx context.Context, id int) (bool, error) {
+	return os.store.Delete(ctx, id)
 }

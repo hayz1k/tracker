@@ -5,42 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05555f0d-adee-4daf-88b8-6cf1711a85b2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/orderTracker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/orderTracker.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/main.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/config.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/order/order.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/order/repository.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/site/repository.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/site/site.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/status.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/status/status.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/http/handlers/order/getbyid.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/http/handlers/order/handler.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/http/handlers/order/post.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/http/handlers/site/get.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/http/handlers/site/getbydomain.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/http/handlers/site/handler.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/http/handlers/site/post.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/http/handlers/site/put.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/http/handlers/updateorders/handler.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/http/handlers/updateorders/updateorders.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/server.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/service/order.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/service/site.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/service/updateorders/service.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/store/postgres/db.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/store/postgres/orderstore/orderstore.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/store/postgres/sitestore/sitestore.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/woocommerce/client.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/cmd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/cmd/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/configs/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/configs/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/internal/domain/order/order.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/domain/order/order.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/internal/domain/order/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/domain/order/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/internal/domain/server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/domain/server/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/internal/domain/status/status.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/domain/status/status.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/order/delete.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/http/handlers/order/delete.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/order/getbyid.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/http/handlers/order/getbyid.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/order/post.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/http/handlers/order/post.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/internal/service/order.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/service/order.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/internal/store/postgres/orderstore/orderstore.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/store/postgres/orderstore/orderstore.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -13,4 +13,5 @@ type Store interface {
 	ListOrders(ctx context.Context, page, limit int, f *OrderFilter) ([]*Order, error)
 	Count(ctx context.Context) (int, error)
 	Exists(ctx context.Context, orderID int) (bool, error)
+	Delete(ctx context.Context, id int) (bool, error)
 }

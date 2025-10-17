@@ -46,6 +46,5 @@ func (h *Handler) PostOrder(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "failed to encode response", http.StatusInternalServerError)
 		return
 	}
-
-	log.Info().Msgf("order %d successfully created", ord.OrderID)
+	w.WriteHeader(http.StatusCreated)
 }
