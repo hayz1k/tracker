@@ -1,0 +1,40 @@
+.login__form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 0 auto;
+  gap: 10px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #D9D9D9;
+  font-family: var(--main-font);
+  font-weight: 800;
+  padding: 45px 50px;
+  border: 2px solid black;
+}
+
+/* Центрирование контейнера */
+.login__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login__input {
+    padding: 10px 30px;
+    font-family: var(--main-font);
+    font-weight: 800;
+    border: 2px solid black;
+}
+
+.login__button {
+    font-family: var(--main-font);
+    font-weight: 800;
+    border: none;
+    background: transparent;
+    font-size: 19px;
+    align-self: end;
+    color:  #FF0000;
+}

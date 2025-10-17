@@ -1,0 +1,47 @@
+@import '../../styles/variables.css';
+
+
+.header {
+  display: flex;
+   flex-direction: column;
+   width: 100%;
+   align-items: center;
+   font-family: var(--main-font);
+   font-weight: 200;
+   background-color: #363434;
+   color: #FFFFFF;
+   padding-bottom: 50px;
+}
+
+.header__title {
+    font-size: 35px;
+    font-family: var(--titles);
+}
+
+.header__title-span {
+    color: #FF0404;
+}
+
+.header__links {
+    display: flex;
+    gap: 50px;
+}
+
+
+.header__links_el {
+  color: #FFFFFF;
+    text-decoration: none;
+    font-family: var(--swag-font);
+    font-size: 20px;
+    transition: color 0.3s ease;
+}
+
+.header__links_el:hover {
+  color: #555;
+}
+
+.header__links_el.active {
+  font-weight: bold;
+  color: #FF0000;
+  border-bottom: 2px solid #FF0000;
+}

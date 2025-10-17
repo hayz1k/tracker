@@ -1,0 +1,7 @@
+@import "./fonts.css";
+
+:root {
+  --main-font: 'Inter', sans-serif;
+  --titles: 'Itim', sans-serif;
+  --swag-font: 'Joti_One', sans-seif;
+}

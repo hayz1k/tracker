@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('../assets/Fonts/Inter/InterDisplay-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../assets/Fonts/Inter/InterDisplay-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Itim';
+  src: url('../assets/Fonts/Itim/Itim-Regular.ttf') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Joti_One';
+  src: url('../assets/Fonts/Joti_One/JotiOne-Regular.ttf') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}

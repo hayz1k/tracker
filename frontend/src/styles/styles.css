@@ -1,0 +1,24 @@
+@import './variables.css';
+
+body {
+    margin: 0;
+}
+
+.Page {
+    background-color: #585757;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: var(--main-font);
+    justify-content: space-between;
+}
+
+.Content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}

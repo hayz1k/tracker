@@ -1,0 +1,57 @@
+.table {
+    margin: 20px 0;
+    width: 95%;
+}
+
+.table th,
+.table td {
+  padding: 7px 15px; /* внутренние отступы сверху/снизу и слева/справа */
+}
+
+.table__titles th {
+  text-align: center; /* выравнивание заголовков по центру */
+}
+
+.table__fields td {
+  text-align: center; /* выравнивание содержимого слева */
+}
+
+.table__titles th {
+    font-family: var(--main-font);
+    font-weight: 200;
+    color: #FFFFFF; 
+    font-size: 20px;
+    
+}
+
+.table__fields td {
+    font-family: var(--main-font);
+    font-weight: 800;
+    color: #FFFFFF;
+    font-size: 20px;
+    
+}
+
+.table,
+.table th,
+.table td {
+  border: none;
+  border-collapse: collapse; /* для самой таблицы */
+}
+
+.table__el {
+    
+}
+
+.table__el:nth-child(odd) {
+	background-color: #888888;
+}
+
+.action-button {
+    background-color: transparent;
+    border: none;
+    font-family: var(--main-font);
+    font-weight: 800;
+    color: #FF0000;
+    font-size: 22px;
+}
