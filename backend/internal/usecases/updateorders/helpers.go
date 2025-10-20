@@ -7,68 +7,11 @@ import (
 	"net/url"
 	"orderTracker/internal/domain/order"
 	"orderTracker/internal/domain/site"
-	"orderTracker/internal/observability"
-	"orderTracker/internal/service"
-	"sync"
+	"orderTracker/internal/infrastructure/httpclient/woocommerce"
 	"time"
 )
 
-const PROCESSING = "pending"
-
-type Service struct {
-	siteService  service.SiteService
-	orderService service.OrderService
-	wooClient    *Client
-}
-
-func NewService(siteSvc service.SiteService, orderSvc service.OrderService, woo *Client) *Service {
-	return &Service{
-		siteService:  siteSvc,
-		orderService: orderSvc,
-		wooClient:    woo,
-	}
-}
-
-// UpdateOrders - перебор всех сайтов
-func (s *Service) UpdateOrders(ctx context.Context) error {
-	observability.OrdersTotal.Inc()
-
-	const workers = 5
-	var wg sync.WaitGroup
-
-	sites, err := s.siteService.SiteList(ctx)
-	if err != nil {
-		return fmt.Errorf("failed to load sites: %w", err)
-	}
-
-	if len(sites) == 0 {
-		log.Warn().Msg("no sites in database")
-		return nil
-	}
-
-	sitesCh := make(chan *site.Site, len(sites))
-	for _, site := range sites {
-		sitesCh <- site
-	}
-	close(sitesCh)
-
-	for i := 0; i < workers; i++ {
-		wg.Add(1)
-		go func(workerID int) {
-			defer wg.Done()
-			for site := range sitesCh {
-				if err := s.processSite(ctx, site); err != nil {
-					log.Error().Err(err).Msgf("worker %d failed to process site %s", workerID, site.Domain)
-				}
-			}
-		}(i)
-	}
-	wg.Wait()
-
-	return nil
-}
-
-// processSite - обработка сайта
+// processSite - обработка конкретного сайта
 func (s *Service) processSite(ctx context.Context, site *site.Site) error {
 	rawOrders, err := s.wooClient.GetOrders(ctx, site)
 	if err != nil {
@@ -105,7 +48,7 @@ func (s *Service) processSite(ctx context.Context, site *site.Site) error {
 }
 
 // buildOrder- конструктор Order из RawOrder
-func (s *Service) buildOrder(raw RawOrder) *order.Order {
+func (s *Service) buildOrder(raw woocommerce.RawOrder) *order.Order {
 	created, _ := time.Parse(time.RFC3339, raw.DateCreated)
 	return &order.Order{
 		OrderID:    raw.ID,
@@ -123,7 +66,7 @@ func (s *Service) buildOrder(raw RawOrder) *order.Order {
 }
 
 // extractDomain - извлекает домен
-func (s *Service) extractDomain(raw RawOrder) string {
+func (s *Service) extractDomain(raw woocommerce.RawOrder) string {
 
 	var siteURL string
 	for _, meta := range raw.MetaData {

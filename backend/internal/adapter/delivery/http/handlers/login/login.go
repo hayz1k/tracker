@@ -30,7 +30,7 @@ func ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	resp := LoginResponse{
 		Token:     "mocked-super-secret-token",
-		ExpiresAt: time.Now().AddDate(5, 0, 0), // истекает через 5 лет
+		ExpiresAt: time.Now().AddDate(5, 0, 0),
 	}
 
 	w.Header().Set("Content-Type", "application/json")

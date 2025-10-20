@@ -4,8 +4,9 @@ import (
 	"database/sql"
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"orderTracker/configs"
-	"orderTracker/internal/store/postgres/orderstore"
-	"orderTracker/internal/store/postgres/sitestore"
+	"orderTracker/internal/infrastructure/store/postgres/orderstore"
+	"orderTracker/internal/infrastructure/store/postgres/sitestore"
+	"time"
 )
 
 type Store struct {
@@ -14,10 +15,16 @@ type Store struct {
 
 func NewPostgresStore(cfg *configs.Config) (*Store, error) {
 	db, err := sql.Open("pgx", cfg.DSN)
+
 	if err != nil {
 		return nil, err
 	}
 
+	db.SetMaxOpenConns(50)
+	db.SetMaxIdleConns(10)
+	db.SetConnMaxLifetime(time.Hour)
+	db.SetConnMaxIdleTime(5 * time.Minute)
+	
 	if err = db.Ping(); err != nil {
 		return nil, err
 	}

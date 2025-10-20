@@ -1,7 +1,7 @@
 package updateorders
 
 import (
-	"orderTracker/internal/service/updateorders"
+	"orderTracker/internal/usecases/updateorders"
 )
 
 type Handler struct {

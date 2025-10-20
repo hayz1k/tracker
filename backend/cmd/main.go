@@ -5,17 +5,15 @@ import (
 	"github.com/rs/zerolog"
 	_ "net/http"
 	"orderTracker/configs"
-	"orderTracker/internal/domain/server"
-	"orderTracker/internal/observability"
-	"orderTracker/internal/store/postgres"
+	"orderTracker/internal/app"
+	"orderTracker/internal/infrastructure/store/postgres"
 	"os"
 )
 
 func main() {
-	observability.Init()
-
 	ctx := context.Background()
 	_ = ctx
+	
 	log := zerolog.New(os.Stdout).With().Timestamp().Logger()
 
 	cfg, err := configs.LoadConfig()
@@ -29,10 +27,10 @@ func main() {
 	}
 	defer store.Close()
 
-	app := server.NewApp(cfg, store)
+	appInstance := app.NewApp(cfg, store)
 
-	srv := server.NewServer(app)
-	
+	srv := app.NewServer(appInstance)
+
 	log.Info().Msgf("server is running on port :%s", cfg.Address)
 	if err = srv.Run(cfg.Address); err != nil {
 		log.Fatal()

@@ -1,4 +1,4 @@
-package updateorders
+package woocommerce
 
 import (
 	"context"

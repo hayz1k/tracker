@@ -4,14 +4,10 @@ import (
 	"encoding/json"
 	"github.com/rs/zerolog/log"
 	"net/http"
+	"orderTracker/internal/adapter/delivery/http/handlers/order/dto"
 	"orderTracker/internal/domain/order"
 	"strconv"
 )
-
-type OrdersResponse struct {
-	Items []*order.Order `json:"items"`
-	Total int            `json:"totalCount"`
-}
 
 func (h *Handler) GetOrders(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
@@ -66,7 +62,7 @@ func (h *Handler) GetOrders(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp := OrdersResponse{
+	resp := dto.OrdersResponse{
 		Items: orders,
 		Total: total,
 	}
