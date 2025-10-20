@@ -1,4 +1,4 @@
-package sitestore
+package postgres
 
 import (
 	"context"

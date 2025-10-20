@@ -5,34 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05555f0d-adee-4daf-88b8-6cf1711a85b2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/internal/adapter/delivery/http/handlers/order/getcount.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/internal/infrastructure/observability/prometheus/metrics.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/internal/usecases/updateorders/updateorders.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/cmd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/cmd/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/domain/server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/app/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/domain/status.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/login/login.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/adapter/delivery/http/handlers/login/login.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/metrics/metrics.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/order/delete.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/adapter/delivery/http/handlers/order/delete.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/order/get.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/adapter/delivery/http/handlers/order/get.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/order/getbyid.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/adapter/delivery/http/handlers/order/getbyid.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/order/getordersnum.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/order/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/adapter/delivery/http/handlers/order/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/order/post.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/adapter/delivery/http/handlers/order/post.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/site/get.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/adapter/delivery/http/handlers/site/get.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/site/getbydomain.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/adapter/delivery/http/handlers/site/getbydomain.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/site/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/adapter/delivery/http/handlers/site/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/site/post.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/adapter/delivery/http/handlers/site/post.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/site/put.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/adapter/delivery/http/handlers/site/put.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/updateorders/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/adapter/delivery/http/handlers/updateorders/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/http/handlers/updateorders/updateorders.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/adapter/delivery/http/handlers/updateorders/updateorders.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/observability/prometheus.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/service/updateorders/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/infrastructure/httpclient/woocommerce/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/service/updateorders/service.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/store/postgres/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/infrastructure/store/postgres/db.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/store/postgres/orderstore/orderstore.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/infrastructure/store/postgres/orderstore/orderstore.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/internal/store/postgres/sitestore/sitestore.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/infrastructure/store/postgres/sitestore/sitestore.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

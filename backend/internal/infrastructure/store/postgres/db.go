@@ -4,8 +4,6 @@ import (
 	"database/sql"
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"orderTracker/configs"
-	"orderTracker/internal/infrastructure/store/postgres/orderstore"
-	"orderTracker/internal/infrastructure/store/postgres/sitestore"
 	"time"
 )
 
@@ -24,7 +22,7 @@ func NewPostgresStore(cfg *configs.Config) (*Store, error) {
 	db.SetMaxIdleConns(10)
 	db.SetConnMaxLifetime(time.Hour)
 	db.SetConnMaxIdleTime(5 * time.Minute)
-	
+
 	if err = db.Ping(); err != nil {
 		return nil, err
 	}
@@ -32,12 +30,12 @@ func NewPostgresStore(cfg *configs.Config) (*Store, error) {
 	return &Store{db: db}, nil
 }
 
-func (s *Store) Orders() *orderstore.OrderStore {
-	return orderstore.NewOrderStore(s.db)
+func (s *Store) Orders() *OrderStore {
+	return NewOrderStore(s.db)
 }
 
-func (s *Store) Sites() *sitestore.SiteStore {
-	return sitestore.NewSiteStore(s.db)
+func (s *Store) Sites() *SiteStore {
+	return NewSiteStore(s.db)
 }
 
 func (s *Store) Close() error {

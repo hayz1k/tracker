@@ -1,4 +1,4 @@
-package orderstore
+package postgres
 
 import (
 	"context"
