@@ -1,31 +1,53 @@
 package status
 
-const (
-	StatusCreated            = "Created"
-	StatusSortingCenter      = "Sorting Center"
-	StatusIntermediateCenter = "Intermediate Center"
-	StatusInTransit          = "In Transit"
-	StatusArrivedDestination = "Arrived at Destination"
-	StatusOutForDelivery     = "Out for Delivery"
-	StatusDelivered          = "Delivered"
-	StatusAwaitingPickup     = "Awaiting Pickup"
-	StatusReturnedToSender   = "Returned to Sender"
-	StatusCustomsHold        = "Customs Hold"
+import (
+	"errors"
+	"time"
 )
 
-var Chains = [][]string{
-	// цепочка 1: стандартная доставка
-	{StatusCreated, StatusSortingCenter, StatusIntermediateCenter, StatusInTransit, StatusArrivedDestination, StatusOutForDelivery, StatusDelivered},
+type Status struct {
+	ID          int       `json:"id"`
+	OrderID     int       `json:"order_id"`
+	SiteID      int       `json:"site_id"`
+	Status      string    `json:"status"`
+	StatusIndex int       `json:"status_index"`
+	CreatedAt   time.Time `json:"created_at"`
+	IsCustom    bool      `json:"is_custom"`
+}
 
-	// цепочка 2: доставка с ожиданием на сортировке
-	{StatusCreated, StatusSortingCenter, StatusSortingCenter, StatusInTransit, StatusArrivedDestination, StatusOutForDelivery, StatusDelivered},
+func (s *Status) SetCustomStatus(status string) {
+	s.Status = status
+	s.IsCustom = true
+}
 
-	// цепочка 3: международная доставка
-	{StatusCreated, StatusSortingCenter, StatusInTransit, StatusIntermediateCenter, StatusCustomsHold, StatusInTransit, StatusArrivedDestination, StatusOutForDelivery, StatusDelivered},
+func (s *Status) SetStatus() {
+	s.StatusIndex = 0
+	chain := Chains[s.OrderID%len(Chains)]
+	s.Status = chain[s.StatusIndex]
+	s.CreatedAt = time.Time{}
+}
 
-	// цепочка 4: самовывоз
-	{StatusCreated, StatusSortingCenter, StatusInTransit, StatusArrivedDestination, StatusAwaitingPickup, StatusDelivered},
+func (s *Status) NextStatus() (*Status, error) {
+	if s.IsCustom {
+		return nil, errors.New("status is custom")
+	}
 
-	// цепочка 5: возврат
-	{StatusCreated, StatusSortingCenter, StatusInTransit, StatusArrivedDestination, StatusOutForDelivery, StatusReturnedToSender},
+	chain := Chains[s.OrderID%len(Chains)]
+	// s = 4   len = 5(но ласт индекс 4)
+	if s.StatusIndex >= len(chain)-1 {
+		return nil, errors.New("not enough elements")
+	}
+	s.StatusIndex++
+	s.Status = chain[s.StatusIndex]
+
+	next := &Status{
+		OrderID:     s.OrderID,
+		SiteID:      s.SiteID,
+		Status:      chain[s.StatusIndex+1],
+		StatusIndex: s.StatusIndex + 1,
+		IsCustom:    false,
+		CreatedAt:   time.Now(),
+	}
+
+	return next, nil
 }

@@ -19,7 +19,7 @@ func (h *Handler) PostOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	exists, err := h.Service.Exists(ctx, req.OrderID)
+	exists, err := h.Service.Exists(ctx, req.OrderID, req.SiteID)
 	if err != nil {
 		log.Error().Err(err).Msg("failed to check if order exists")
 		h.Metrics.BusinessOrders.WithLabelValues("failed").Inc()

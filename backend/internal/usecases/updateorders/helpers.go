@@ -11,6 +11,8 @@ import (
 	"time"
 )
 
+const CREATED = "Created"
+
 // processSite - обработка конкретного сайта
 func (s *Service) processSite(ctx context.Context, site *site.Site) error {
 	rawOrders, err := s.wooClient.GetOrders(ctx, site)
@@ -22,23 +24,23 @@ func (s *Service) processSite(ctx context.Context, site *site.Site) error {
 
 		ord := s.buildOrder(raw)
 
-		if exists, _ := s.orderService.Exists(ctx, ord.OrderID); exists {
-			log.Info().Msgf("order %d already in database", ord.OrderID)
+		if exists, _ := s.orderService.Exists(ctx, ord.OrderID, ord.SiteID); exists {
 			continue
 		}
 
 		domain := s.extractDomain(raw)
+		fmt.Printf("domain %s", domain)
 		ord.Site, err = s.siteService.GetSiteByDomain(ctx, domain)
-		fmt.Println(ord.Site)
+		fmt.Print(ord.Site)
 		if err != nil {
 			log.Error().Err(err).Msgf("can't resolve site for domain %s", domain)
 			continue
 		}
+
 		ord.SiteID = ord.Site.ID
 
 		ord.GenerateTrackNumber()
-		ord.SetStatusChain()
-		fmt.Printf("track number %s, status chain %d", ord.TrackNumber, ord.StatusChain)
+		ord.CurrentStatus = CREATED
 
 		if err := s.orderService.Save(ctx, ord); err != nil {
 			log.Error().Err(err).Msgf("can't create order %d", ord.OrderID)
@@ -49,7 +51,10 @@ func (s *Service) processSite(ctx context.Context, site *site.Site) error {
 
 // buildOrder- конструктор Order из RawOrder
 func (s *Service) buildOrder(raw woocommerce.RawOrder) *order.Order {
-	created, _ := time.Parse(time.RFC3339, raw.DateCreated)
+	created, err := time.ParseInLocation("2006-01-02T15:04:05", raw.DateCreated, time.UTC)
+	if err != nil {
+		log.Info().Msgf("parse error: %v (input: %v)\n", err, raw.DateCreated)
+	}
 	return &order.Order{
 		OrderID:    raw.ID,
 		FirstName:  raw.Billing.FirstName,

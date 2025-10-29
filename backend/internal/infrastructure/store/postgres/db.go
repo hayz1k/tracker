@@ -38,6 +38,8 @@ func (s *Store) Sites() *SiteStore {
 	return NewSiteStore(s.db)
 }
 
+func (s *Store) Statuses() *StatusStore { return NewStatusStore(s.db) }
+
 func (s *Store) Close() error {
 	return s.db.Close()
 }

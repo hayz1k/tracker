@@ -11,8 +11,9 @@ type OrderService interface {
 	Save(ctx context.Context, order *order.Order) error
 	ListOrders(ctx context.Context, page, limit int, f *order.OrderFilter) ([]*order.Order, error)
 	Count(ctx context.Context) (int, error)
-	Exists(ctx context.Context, orderID int) (bool, error)
+	Exists(ctx context.Context, orderID int, siteID int) (bool, error)
 	Delete(ctx context.Context, id int) (bool, error)
+	Update(ctx context.Context, order *order.Order) error
 }
 
 type orderService struct {
@@ -32,14 +33,14 @@ func (os *orderService) GetByID(ctx context.Context, id int) (*order.Order, erro
 func (os *orderService) Save(ctx context.Context, order *order.Order) error {
 	log.Info().Msg("start save order service")
 	if err := order.Validate(); err != nil {
-		log.Error().Msg("invalid order")
+		log.Error().Err(err)
 		return err
 	}
 	return os.store.Save(ctx, order)
 }
 
-func (os *orderService) Exists(ctx context.Context, orderID int) (bool, error) {
-	return os.store.Exists(ctx, orderID)
+func (os *orderService) Exists(ctx context.Context, orderID int, siteID int) (bool, error) {
+	return os.store.Exists(ctx, orderID, siteID)
 }
 
 func (os *orderService) ListOrders(ctx context.Context, page, limit int, f *order.OrderFilter) ([]*order.Order, error) {
@@ -52,4 +53,8 @@ func (os *orderService) Count(ctx context.Context) (int, error) {
 
 func (os *orderService) Delete(ctx context.Context, id int) (bool, error) {
 	return os.store.Delete(ctx, id)
+}
+
+func (os *orderService) Update(ctx context.Context, order *order.Order) error {
+	return os.store.Update(ctx, order)
 }

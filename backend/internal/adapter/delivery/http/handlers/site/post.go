@@ -38,7 +38,4 @@ func (h *Handler) PostSite(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
-	if err := json.NewEncoder(w).Encode(s); err != nil {
-		log.Error().Err(err).Msg("failed to write response")
-	}
 }

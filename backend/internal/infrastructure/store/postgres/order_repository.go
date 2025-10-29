@@ -18,12 +18,32 @@ func NewOrderStore(db *sql.DB) *OrderStore {
 	return &OrderStore{db: db}
 }
 
-func (o *OrderStore) GetByID(ctx context.Context, orderID int) (*order.Order, error) {
+func (o *OrderStore) GetByID(ctx context.Context, id int) (*order.Order, error) {
 	log.Info().Msg("starting getting order by id")
 	var result order.Order
 
-	query := "SELECT * FROM orders WHERE order_id = $1"
-	err := o.db.QueryRow(query, orderID).
+	query := "SELECT * FROM orders WHERE id = $1"
+	err := o.db.QueryRow(query, id).
+		Scan(&result.ID, &result.OrderID, &result.FirstName, &result.SecondName,
+			&result.DeliveryAddress, &result.Total, &result.CurrentStatus,
+			&result.Created, &result.TrackNumber, &result.SiteID)
+	if err != nil {
+		log.Error().Err(err).Msg("error getting result by id")
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, errors.New("order not found")
+		}
+		return nil, errors.New("internal error")
+	}
+	log.Info().Msg("success getting order by id")
+	return &result, nil
+}
+
+func (o *OrderStore) GetByIDs(ctx context.Context, orderID, siteID int) (*order.Order, error) {
+	log.Info().Msg("starting getting order by id")
+	var result order.Order
+
+	query := "SELECT * FROM orders WHERE order_id = $1 AND site_id = $2"
+	err := o.db.QueryRow(query, orderID, siteID).
 		Scan(&result.OrderID, &result.FirstName, &result.SecondName,
 			&result.DeliveryAddress, &result.Total, &result.CurrentStatus,
 			&result.Created, &result.TrackNumber, &result.SiteID)
@@ -41,13 +61,8 @@ func (o *OrderStore) GetByID(ctx context.Context, orderID int) (*order.Order, er
 func (o *OrderStore) ListOrders(ctx context.Context, page, limit int, f *order.OrderFilter) ([]*order.Order, error) {
 	offset := (page - 1) * limit
 
-	baseQuery := `
-		SELECT 
-			order_id, first_name, second_name, 
-			address, total, status, 
-			created_at, track_number, site_id
-		FROM orders
-	`
+	baseQuery := `SELECT id, order_id, first_name, second_name, address, total, 
+       status, created_at, track_number, site_id FROM orders`
 
 	var whereClauses []string
 	var args []interface{}
@@ -74,7 +89,6 @@ func (o *OrderStore) ListOrders(ctx context.Context, page, limit int, f *order.O
 		}
 	}
 
-	// добавляем WHERE, если есть фильтры
 	if len(whereClauses) > 0 {
 		baseQuery += " WHERE " + strings.Join(whereClauses, " AND ")
 	}
@@ -148,7 +162,7 @@ func (o *OrderStore) GetByTrackNumber(ctx context.Context, trackNumber string) (
 func (o *OrderStore) Save(ctx context.Context, order *order.Order) error {
 	log.Info().Msg("saving order")
 	query := "INSERT INTO orders " +
-		"(order_id, first_name, second_name, address, total, status, created_at, track_number, site_id) " +
+		"(order_id, first_name, second_name, address, total, status, created, track_number, site_id) " +
 		"VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)"
 	_, err := o.db.Exec(query, order.OrderID, order.FirstName, order.SecondName,
 		order.DeliveryAddress, order.Total, order.CurrentStatus, order.Created, order.TrackNumber, order.SiteID)
@@ -168,11 +182,11 @@ func (o *OrderStore) StatusesByID(ctx context.Context, id int) {
 	panic("implement me")
 }
 
-func (o *OrderStore) Exists(ctx context.Context, orderID int) (bool, error) {
+func (o *OrderStore) Exists(ctx context.Context, orderID int, siteID int) (bool, error) {
 	var tmp int
-	query := "SELECT 1 FROM orders WHERE order_id = $1 LIMIT 1"
+	query := "SELECT 1 FROM orders WHERE order_id = $1 AND site_id = $2 LIMIT 1"
 
-	err := o.db.QueryRowContext(ctx, query, orderID).Scan(&tmp)
+	err := o.db.QueryRowContext(ctx, query, orderID, siteID).Scan(&tmp)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return false, nil
@@ -203,4 +217,17 @@ func (o *OrderStore) Delete(ctx context.Context, id int) (bool, error) {
 	}
 
 	return true, nil
+}
+
+func (o *OrderStore) Update(ctx context.Context, ord *order.Order) error {
+	log.Info().Msg("updating order")
+	query := "UPDATE orders SET order_id=$1, first_name=$2, second_name=$3, address=$4, total=$5, status=$6, created=$7, track_number=$8, site_id=$9 WHERE id=$10"
+	_, err := o.db.ExecContext(ctx, query, ord.OrderID, ord.FirstName, ord.SecondName,
+		ord.DeliveryAddress, ord.Total, ord.CurrentStatus, ord.Created, ord.TrackNumber, ord.SiteID, ord.ID)
+	if err != nil {
+		log.Error().Err(err).Msg("error updating order")
+		return errors.New("internal error")
+	}
+	log.Info().Msg("successfully updated order")
+	return nil
 }

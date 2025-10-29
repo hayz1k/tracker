@@ -18,13 +18,6 @@ func (h *Handler) DeleteOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	exists, err := h.Service.Exists(ctx, id)
-	if !exists {
-		log.Error().Msgf("order %d is not exists", id)
-		http.Error(w, "order not found", http.StatusNotFound)
-		return
-	}
-
 	deleted, err := h.Service.Delete(ctx, id)
 	if err != nil {
 		log.Error().Err(err).Msgf("failed to delete order %d", id)

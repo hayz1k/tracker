@@ -7,12 +7,12 @@ import (
 )
 
 func RegisterRoutes(r *chi.Mux, handler *Handlers) {
-
 	// Orders
 	r.Get("/api/orders/count", handler.Order.GetOrdersCount)
 	r.Get("/api/orders/{id}", handler.Order.GetOrderByID)
 	r.Get("/api/orders", handler.Order.GetOrders)
 	r.Post("/api/orders", handler.Order.PostOrder)
+	r.Patch("/api/orders/{id}", handler.Order.PatchOrder)
 	r.Delete("/api/orders/{id}", handler.Order.DeleteOrder)
 	// r.Post("/orders{id}", handler.Order.CreateOrder)
 
@@ -21,6 +21,10 @@ func RegisterRoutes(r *chi.Mux, handler *Handlers) {
 	r.Post("/api/sites", handler.Site.PostSite)
 	// r.Put("/api/sites", handler.Site.PutSite)
 	// r.Delete("/api/sites/{id}", handler.Site.DeleteSite)
+
+	// Statuses
+	r.Get("/api/statuses/{id}", handler.Status.GetByID)
+	r.Get("/api/statuses", handler.Status.GetByData)
 
 	// Other
 	r.Post("/update-orders", handler.UpdateOrders.UpdateOrders)

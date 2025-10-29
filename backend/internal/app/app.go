@@ -4,6 +4,7 @@ import (
 	"orderTracker/configs"
 	"orderTracker/internal/adapter/delivery/http/handlers/order"
 	"orderTracker/internal/adapter/delivery/http/handlers/site"
+	"orderTracker/internal/adapter/delivery/http/handlers/status"
 	"orderTracker/internal/adapter/delivery/http/handlers/updateorders"
 	updateservice "orderTracker/internal/infrastructure/httpclient/woocommerce"
 	"orderTracker/internal/infrastructure/observability/prometheus"
@@ -15,12 +16,14 @@ import (
 type Handlers struct {
 	Order        *order.Handler
 	Site         *site.Handler
+	Status       *status.Handler
 	UpdateOrders *updateorders.Handler
 }
 
 type Services struct {
-	Order service.OrderService
-	Site  service.SiteService
+	Order  service.OrderService
+	Site   service.SiteService
+	Status service.StatusService
 }
 
 type App struct {
@@ -32,8 +35,9 @@ type App struct {
 
 func NewApp(cfg *configs.Config, store *postgres.Store) *App {
 	services := Services{
-		Order: service.NewOrderService(store.Orders()),
-		Site:  service.NewSiteService(store.Sites()),
+		Order:  service.NewOrderService(store.Orders()),
+		Site:   service.NewSiteService(store.Sites()),
+		Status: service.NewStatusService(store.Statuses()),
 	}
 
 	metrics := prometheus.NewMetrics()
@@ -49,6 +53,7 @@ func NewApp(cfg *configs.Config, store *postgres.Store) *App {
 	handlers := Handlers{
 		Order:        order.NewOrderHandler(services.Order, services.Site, metrics),
 		Site:         site.NewSiteHandler(services.Site),
+		Status:       status.NewStatusHandler(services.Status),
 		UpdateOrders: updateorders.NewHandler(updateOrdersSrv),
 	}
 
